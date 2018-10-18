@@ -18,10 +18,8 @@
         "bcrypt": "^3.0.0",
         "body-parser": "^1.18.3",
         "chalk": "^2.4.1",
-        "cloudinary": "^1.11.0",
         "compression": "^1.7.3",
         "express": "^4.16.3",
-        "express-fileupload": "^0.4.0",
         "helmet": "^3.13.0",
         "jsonwebtoken": "^8.3.0",
         "jwt-decode": "^2.2.0",
@@ -31,7 +29,8 @@
         "react": "^16.5.1",
         "react-dom": "^16.5.0",
         "react-router": "^4.3.1",
-        "react-router-dom": "^4.3.1"
+        "react-router-dom": "^4.3.1",
+        "signaturit-sdk": "^1.1.0"
     },
     "devDependencies": {
         "babel-core": "^6.26.3",

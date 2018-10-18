@@ -1,24 +1,45 @@
-const express = require('express')
-const router = express.Router()
+const express = require("express");
+const router = express.Router();
+const SignaturitClient = require("signaturit-sdk");
 
-const authRoutes = require('./auth')
-const { userMiddleware, checkLoggedIn } = require('../../utils/middleware')
+client = new SignaturitClient("SIGNATURIT_API_KEY", false); // false for sanbox, true for production
 
-router.use(userMiddleware)
+const authRoutes = require("./auth");
+const { userMiddleware, checkLoggedIn } = require("../../utils/middleware");
 
-router.get('/', (req, res) => {
-    res.send({ hello: true })
-})
+router.use(userMiddleware);
 
-router.get('/protected', checkLoggedIn, (req, res) => {
-    console.log('USER', req.user)
-    res.send({ success: true })
-})
+router.get("/", (req, res) => {
+    res.send({ hello: true });
+});
 
-router.use('/auth', authRoutes)
+router.use("/auth", authRoutes);
 
 router.use((req, res) => {
-    res.status(404).send({ error: 'not-found' })
-})
+    res.status(404).send({ error: "not-found" });
+});
 
-module.exports = router
+// new Signature request
+router.post("/send", (req, res) => {
+    // const { email } = req.body;
+
+    recipients = { email: req.body.email };
+
+    files = ["../../public/Muster.pdf"];
+
+    sign_params = {
+        subject: "Sign document",
+        body: "Please sign this document" // need to add the template here
+    };
+
+    client
+        .createSignature(files, recipients, sign_params)
+        .then(res => {
+            success: true;
+        })
+        .catch(error => {
+            success: false;
+        });
+});
+
+module.exports = router;
