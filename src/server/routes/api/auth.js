@@ -32,46 +32,39 @@ router.post("/sign-up", (req, res) => {
 });
 
 router.post("/getclient", (req, res) => {
-    const { id } = req.params;
-    console.log("AT post CLIENT");
-    recipient = { name: "Noe", email: "noelials@hotmail.es" };
+    const { email } = req.body;
+    const name = email.substring(0, email.lastIndexOf("@"));
 
-    files = ["../../public/Muster.pdf"];
-
-    sign_params = {
-        subject: "Receipt number 250",
-        body: "Please, can you sign this document?"
-    };
-
-    // client
-    //     .createSignature(files, [{ email: "noelials.otro@gmail.com" }])
-    //     .then(result => {
-    //         console.log("result create signature", result);
-    //     })
-    //     .catch(err => console.log("error create signature", err));
+    recipient = { name: name, email: "helene.schmidt7@gmail.com" };
+    files = ["/Users/Helene/Desktop/buergeramt/src/server/public/test.pdf"];
+    // logo = [
+    //     "<html><body><img src=`/Users/Helene/Desktop/buergeramt/src/server/public/mr_logo.png`></img></body></html>"
+    // ];
 
     client
         .createContact(recipient.email, recipient.name)
         .then(result => {
-            console.log("result create contact", result);
             client
-                .createSignature(files, recipient, sign_params)
-                .then(result => {
-                    console.log("result create signature", result);
-                })
+                .createSignature(
+                    files,
+                    { email: recipient.email },
+                    {
+                        body: logo
+                    }
+                )
                 .catch(err => console.log("error create signature", err));
         })
         .catch(err => console.log("error create contact", err));
 });
 
-router.get("/getclient", (req, res) => {
-    client
-        .getSignatures()
-        .then(result => {
-            console.log("result contacts", result);
-        })
-        .catch(err => console.log("error contacts", err));
-});
+// router.get("/getclient", (req, res) => {
+//     client
+//         .getSignatures()
+//         .then(result => {
+//             console.log("result contacts", result);
+//         })
+//         .catch(err => console.log("error contacts", err));
+// });
 
 router.post("/sign-in", (req, res) => {
     const { email, password } = req.body;

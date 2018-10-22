@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 const Navigation = props => {
     return (
         <div className="navigation">
-            <div className="container nav-content">
+            <div className="nav-content">
                 {props.user ? (
                     <Link className="link nav-link" to="/auth/logout">
                         Logout

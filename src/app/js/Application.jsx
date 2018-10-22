@@ -8,7 +8,6 @@ import Home from "./Home";
 import Navigation from "./Navigation";
 
 import NotFound from "./NotFound";
-import api from "./utils/api";
 
 class Application extends React.Component {
     constructor(props) {
@@ -29,7 +28,7 @@ class Application extends React.Component {
     render() {
         return (
             <BrowserRouter>
-                <div>
+                <div className="container">
                     <Navigation user={this.state.user} />
                     <Switch>
                         <Route exact path="/" render={() => <Home user={this.state.user} />} />
