@@ -1,11 +1,14 @@
-import React from 'react'
+import React from "react";
 
 const Home = props => {
-    return (
-        <div className="container">
-            <h1>Hello, {props.user ? props.user.email : 'Stranger'}!</h1>
-        </div>
-    )
-}
+    const name = props.user.email.substring(0, props.user.email.lastIndexOf("@"));
 
-export default Home
+    return (
+        <div className="container__home">
+            <h1>hello {props.user ? name : "Stranger"}</h1>
+            <p>Please check your inbox.</p>
+        </div>
+    );
+};
+
+export default Home;

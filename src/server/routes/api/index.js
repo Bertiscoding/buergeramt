@@ -1,24 +1,23 @@
-const express = require('express')
-const router = express.Router()
+const express = require("express");
+const router = express.Router();
 
-const authRoutes = require('./auth')
-const { userMiddleware, checkLoggedIn } = require('../../utils/middleware')
+const axios = require("axios");
 
-router.use(userMiddleware)
+const config = require("../../config");
 
-router.get('/', (req, res) => {
-    res.send({ hello: true })
-})
+const authRoutes = require("./auth");
+const { userMiddleware, checkLoggedIn } = require("../../utils/middleware");
 
-router.get('/protected', checkLoggedIn, (req, res) => {
-    console.log('USER', req.user)
-    res.send({ success: true })
-})
+router.use(userMiddleware);
 
-router.use('/auth', authRoutes)
+router.get("/", (req, res) => {
+    res.send({ hello: true });
+});
+
+router.use("/auth", authRoutes);
 
 router.use((req, res) => {
-    res.status(404).send({ error: 'not-found' })
-})
+    res.status(404).send({ error: "not-found" });
+});
 
-module.exports = router
+module.exports = router;

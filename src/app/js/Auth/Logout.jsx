@@ -1,17 +1,17 @@
-import React from 'react'
-import { Redirect } from 'react-router-dom'
+import React from "react";
+import { Redirect } from "react-router-dom";
 
 class Logout extends React.Component {
     constructor(props) {
-        super(props)
+        super(props);
 
-        localStorage.removeItem('identity')
-        props.resetUser()
+        localStorage.removeItem("identity");
+        props.resetUser();
     }
 
     render() {
-        return <Redirect to="/" />
+        return <Redirect to="/auth/sign-up" />;
     }
 }
 
-export default Logout
+export default Logout;
