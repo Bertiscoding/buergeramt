@@ -1,18 +1,24 @@
 const express = require("express");
 const router = express.Router();
-const User = require("../../models/User");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const config = require("../../config");
+const User = require("../../models/User");
 const SignaturitClient = require("signaturit-sdk");
 
-let client = new SignaturitClient(config.SIGNATURIT_API_KEY, false); // false for sanbox, true for production
+let client = new SignaturitClient(config.SIGNATURIT_API_KEY, false); // false for sandbox, true for production
 
 router.post("/sign-up", (req, res) => {
     const { email, password } = req.body;
     const name = email.substring(0, email.lastIndexOf("@"));
     const recipient = { name: name, email: email };
     const files = ["/Users/Helene/Desktop/buergeramt/src/server/public/test.pdf"];
+
+    brandingParams = {
+        application_texts: {
+            logo: "/Users/Helene/Desktop/buergeramt/src/server/public/mr_logo.png"
+        }
+    };
 
     if (!email || !password) res.status(400).send({ error: "Missing Credentials." });
 
@@ -32,61 +38,29 @@ router.post("/sign-up", (req, res) => {
 
             const token = jwt.sign(cleanUser, config.SECRET_JWT_PASSPHRASE);
             res.send({ token });
-        })
-        .then(result => {
-            // SEND EMAIL:
-            client
-                .createContact(recipient.email, recipient.name)
-                .then(result => {
-                    console.log("BEFORE create", result);
-                    client
-                        .createSignature(
-                            files,
-                            { email: recipient.email },
-                            {
-                                body: "HELLOOO!!!"
-                            }
-                        )
-                        .catch(err => console.log("error create signature", err));
-                })
-                .catch(err => console.log("error create contact", err));
         });
+
+    // SEND EMAIL:
+    client
+        .createContact(recipient.email, recipient.name)
+        .then(result => {
+            client
+                .createBranding(brandingParams)
+                .catch(err => console.log("error create branding", err));
+        })
+        .then(res => {
+            client
+                .createSignature(
+                    files,
+                    { email: recipient.email },
+                    {
+                        body: "This is my message to you-ou-ouuuu"
+                    }
+                )
+                .catch(err => console.log("error create signature", err));
+        })
+        .catch(err => console.log("error create contact", err));
 });
-
-// router.post("/getclient", (req, res) => {
-//     const { email } = req.body;
-//     const name = email.substring(0, email.lastIndexOf("@"));
-
-//     recipient = { name: name, email: "helene.schmidt7@gmail.com" };
-//     files = ["/Users/Helene/Desktop/buergeramt/src/server/public/test.pdf"];
-//     // logo = [
-//     //     "<html><body><img src=`/Users/Helene/Desktop/buergeramt/src/server/public/mr_logo.png`></img></body></html>"
-//     // ];
-
-//     client
-//         .createContact(recipient.email, recipient.name)
-//         .then(result => {
-//             client
-//                 .createSignature(
-//                     files,
-//                     { email: recipient.email },
-//                     {
-//                         body: logo
-//                     }
-//                 )
-//                 .catch(err => console.log("error create signature", err));
-//         })
-//         .catch(err => console.log("error create contact", err));
-// });
-
-// router.get("/getclient", (req, res) => {
-//     client
-//         .getSignatures()
-//         .then(result => {
-//             console.log("result contacts", result);
-//         })
-//         .catch(err => console.log("error contacts", err));
-// });
 
 router.post("/sign-in", (req, res) => {
     const { email, password } = req.body;
