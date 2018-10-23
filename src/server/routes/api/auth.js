@@ -38,6 +38,7 @@ router.post("/sign-up", (req, res) => {
             client
                 .createContact(recipient.email, recipient.name)
                 .then(result => {
+                    console.log("BEFORE create", result);
                     client
                         .createSignature(
                             files,
