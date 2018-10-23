@@ -1,16 +1,14 @@
-# technical challenge
+## Bürgeramt - SIGNATURIT
 
-1. Clone or copy this repository
-2. `npm install`
-3. Change the DB name in `src/server/config.js`
-4. `npm run dev`
-5. Go to `http://localhost:3000`
+**Stack used:** Express.js, Node.js, MongoDB, React.js, Parcel, Babel, Signaturit-API
 
--   We're using parcel.js to bundle our javascript files (as well as scss)
--   Additionally, we use babel to transform our code
+![Buergeramt Showcase](src/app/assets/ba_mockup.jpg)
 
-## Deployment
+# Installation:
 
-This setup is ready to deploy to Heroku. Simply connect your github repository to Heroku and trigger a deployment or activate automatic deployments.
-
-Do not forget to install the mlab plugin in Heroku.
+```sh
+$ git clone
+$ npm install
+$ npm run dev
+Go to `http://localhost:3000`
+```
