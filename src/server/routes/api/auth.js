@@ -12,11 +12,11 @@ router.post("/sign-up", (req, res) => {
     const { email, password } = req.body;
     const name = email.substring(0, email.lastIndexOf("@"));
     const recipient = { name: name, email: email };
-    const files = ["/Users/Helene/Desktop/buergeramt/src/server/public/test.pdf"];
+    const files = ["../../public/test.pdf"];
 
     brandingParams = {
         application_texts: {
-            logo: "/Users/Helene/Desktop/buergeramt/src/server/public/mr_logo.png"
+            logo: ["../../public/mr_logo.png"]
         }
     };
 
