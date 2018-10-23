@@ -4,7 +4,7 @@
 
 ![Buergeramt Showcase](src/app/assets/ba_mockup.jpg)
 
-# Installation:
+### Installation:
 
 ```sh
 $ git clone
