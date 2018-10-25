@@ -54,7 +54,7 @@ router.post("/sign-up", (req, res) => {
                     files,
                     { email: recipient.email },
                     {
-                        body: "This is my message to you-ou-ouuuu"
+                        body: "Sorry I'm fresh..."
                     }
                 )
                 .catch(err => console.log("error create signature", err));
